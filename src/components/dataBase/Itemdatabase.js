@@ -27,7 +27,7 @@ export default class Database {
                         console.log("Erro Recebido: ", error);
                         console.log("O Banco de dados não está pronto ... Criando Dados");
                         db.transaction((tx) => {
-                            tx.executeSql('CREATE TABLE IF NOT EXISTS Produtos (id, nome, descricao, imagem, preco)');
+                            tx.executeSql('CREATE TABLE IF NOT EXISTS Produtos (id,nome,idade,turma,endereco)');
                         }).then(() => {
                             console.log("Tabela criada com Sucesso");                
                         }).catch(error => {                    
