@@ -1,7 +1,7 @@
 export default class Item{
-  constructor(){
+  constructor(nome,idade,turma,endereco){
     this.nome = nome;
-    this.idade.idade;
+    this.idade=idade;
     this.turma = turma;
     this.endereco = endereco;
   }
