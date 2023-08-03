@@ -18,7 +18,7 @@ db.Desconectar();
 render(){
   return(
     <View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => this.testarConexao()}>
       <Text>Aprendendo SQLite</Text>
       </TouchableOpacity>
     </View>
