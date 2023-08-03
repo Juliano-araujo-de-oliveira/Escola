@@ -5,7 +5,7 @@ import Itemdatabase from './src/components/dataBase/Itemdatabase';
 export default class App extends Component {
 
 
-testarConexao () {
+testarConexao = () => {
 const db = new Itemdatabase();
 db.Conectar();
 db.Desconectar();
