@@ -11,7 +11,7 @@ const database_displayname = "SQLite React Offline Database"; //Nome de exibiç�
 const database_size = 200000; //tamanho do banco de dados
 
 //Função de inicialização do Banco de Dados
-export default class Database {
+export default class Itemdatabase {
     Conectar() {
         let db;
         return new Promise((resolve) => {
@@ -22,13 +22,13 @@ export default class Database {
                 SQLite.openDatabase(database_name, database_version, database_displayname, database_size).then(DB => {
                     db = DB;
                     console.log("Banco de dados Aberto");
-                    db.executeSql('SELECT 1 FROM Item LIMIT 1').then(() => {
+                    db.executeSql('SELECT 1 FROM item LIMIT 1').then(() => {
                         console.log("O banco de dados está pronto ... Executando Consulta SQL ...");
                     }).catch((error) => {
                         console.log("Erro Recebido: ", error);
                         console.log("O Banco de dados não está pronto ... Criando Dados");
                         db.transaction((tx) => {
-                            tx.executeSql('CREATE TABLE IF NOT EXISTS Item (id INTEGER PRIMARY KEY AUTOINCREMENT,nome VARCHAR(50),idade INTERGER (20),turma INTERGER(20),endereco VARCHAR(50)');
+                            tx.executeSql('CREATE TABLE IF NOT EXISTS item (id INTEGER PRIMARY KEY AUTOINCREMENT,nome VARCHAR(30),idade INTEGER,turma INTEGER,endereco VARCHAR(30))');
                         }).then(() => {
                             console.log("Tabela criada com Sucesso");
                         }).catch(error => {
@@ -97,7 +97,7 @@ export default class Database {
             this.Conectar().then((db) => {      
                 db.transaction((tx) => {     
                     //Query SQL para inserir um novo produto   
-                    tx.executeSql('INSERT INTO Item (nome,idade,turma,endereco ) VALUES (?, ?, ?, ?)', [item.id, item.nome, item.idade, item.turma, item.endereco]).then(([tx, results]) => { 
+                    tx.executeSql('INSERT INTO Item (id,nome,idade,turma,endereco ) VALUES (?, ?, ?, ?,?)', [item.id, item.nome, item.idade, item.turma, item.endereco]).then(([tx, results]) => { 
                         resolve(results);        
                     });      
                 }).then((result) => {        

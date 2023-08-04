@@ -9,14 +9,13 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    nome:"item1",
-    idade:0,
-    turma:15,
-    endereco:"arroio do sal",
-
- 
-      lista: []
+    nome:"pos",
+    idade:"",
+    endereco:"ola",
+    turma:"",
+    lista: [],
     }
+ 
   }
 
   Listar = () => {
@@ -46,7 +45,7 @@ export default class App extends Component {
        
        {
         this.state.lista.map(
-        item => (<Text>{item.id},{item.nome},{item.idade},{item.turma},{item.endereco}</Text>)
+        Item => (<Text>{Item.id},{Item.nome},{Item.idade},{Item.turma},{Item.endereco}</Text>)
         )
        }
       </View>
