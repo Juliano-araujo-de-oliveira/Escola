@@ -1,22 +1,27 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Button } from 'react-native';
+import { Text, View, TouchableOpacity,ScrollView, Button,TextInput,} from 'react-native';
 
 import Item from './src/components/models/Item';
 import Itemdatabase from './src/components/dataBase/Itemdatabase';
 import { Style } from './src/components/estilo/Style';
+import Turmaview from './src/lista/Turmaview';
+
+
 export default class App extends Component {
+
 
   constructor(props) {
     super(props);
     this.state = {
-    nome:"pos",
+    nome:"",
     idade:"",
-    endereco:"ola",
+    endereco:"",
     turma:"",
     lista: [],
+    k:9,
+    o:1589,
     }
- 
-  }
+ }
 
   Listar = () => {
     const db = new Itemdatabase();
@@ -25,31 +30,52 @@ export default class App extends Component {
         this.setState({ lista: dados })
       }
     )
+ 
   }
 
+  
   Cadastrar = (nome,idade,turma,endereco) => {
     const db = new Itemdatabase();
     const NovoItem = new Item(nome,idade,turma,endereco);
     db.Cadastrar(NovoItem)
+    this.Listar();
   }
-
-  render() {
+render() {
     return (
+   
       <View style={Style.container}>
-        <TouchableOpacity onPress={()=> this.Cadastrar(this.state.nome,this.state.endereco,this.state.idade,this.state.turma)}>
+       <TextInput  onChangeText={(textoDigitado) => this.setState({nome:textoDigitado})}  placeholder='Nome'/>
+       <TextInput  onChangeText={(textoDigitado) => this.setState({idade:textoDigitado})}placeholder='Idade' />
+       <TextInput  onChangeText={(textoDigitado) => this.setState({turma:textoDigitado})}placeholder='Turma '/>
+       <TextInput  onChangeText={(textoDigitado) => this.setState({endereco:textoDigitado})}placeholder='Endereco'/>
+
+      
+        <TouchableOpacity onPress={()=> this.Cadastrar(this.state.id,this.state.nome,this.state.endereco,this.state.idade,this.state.turma)}>
           <Text>Cadastrar</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.Listar()}>
-          <Text style={Style.escrita}>Aprendendo SQLite</Text>
-        </TouchableOpacity>
-       
-       {
+
+        <ScrollView>
+      
+        {
         this.state.lista.map(
-        Item => (<Text>{Item.id},{Item.nome},{Item.idade},{Item.turma},{Item.endereco}</Text>)
+        item => (
+          <Turmaview
+          id={item.id}
+          nome={item.nome}
+          idade={item.idade}
+          endereco={item.endereco}
+          turma={item.turma}
+          />
+        )
         )
        }
-      </View>
+          </ScrollView>
+       </View>
+     
+      
     )
+
   }
+
 }
 
