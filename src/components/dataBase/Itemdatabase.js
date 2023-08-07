@@ -1,6 +1,5 @@
 //Importação do plugin SQLite
 import SQLite from "react-native-sqlite-storage";
-import Item from "../models/Item";
 SQLite.DEBUG(true);
 SQLite.enablePromise(true);
 
@@ -22,13 +21,13 @@ export default class Itemdatabase {
                 SQLite.openDatabase(database_name, database_version, database_displayname, database_size).then(DB => {
                     db = DB;
                     console.log("Banco de dados Aberto");
-                    db.executeSql('SELECT 1 FROM item LIMIT 1').then(() => {
+                    db.executeSql('SELECT 1 FROM Item LIMIT 1').then(() => {
                         console.log("O banco de dados está pronto ... Executando Consulta SQL ...");
                     }).catch((error) => {
                         console.log("Erro Recebido: ", error);
                         console.log("O Banco de dados não está pronto ... Criando Dados");
                         db.transaction((tx) => {
-                            tx.executeSql('CREATE TABLE IF NOT EXISTS item (id INTEGER PRIMARY KEY AUTOINCREMENT,nome VARCHAR(30),idade INTEGER,turma INTEGER,endereco VARCHAR(30))');
+                            tx.executeSql('CREATE TABLE IF NOT EXISTS Item (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(30), idade INTEGER, turma INTEGER, endereco VARCHAR(30))');
                         }).then(() => {
                             console.log("Tabela criada com Sucesso");
                         }).catch(error => {
@@ -43,7 +42,7 @@ export default class Itemdatabase {
                 console.log("echoTest Falhou - plugin não funcional");
             });
         });
-    };
+    }
 
     //Função para fechar a Conexão com o Banco de dados
     Desconectar(db) {
@@ -74,8 +73,8 @@ export default class Itemdatabase {
                         let len = results.rows.length;
                         for (let i = 0; i < len; i++) {
                             let row = results.rows.item(i);
-                            const { id,nome,idade,turma,endereco } = row;
-                           lista.push({ id, nome,idade,turma,endereco });
+                            const { id,nome,idade,turma,endereco,aluno } = row;
+                           lista.push({ id, nome,idade,turma,endereco,aluno });
                         }
                         console.log(lista);
                         resolve(lista);
@@ -101,7 +100,7 @@ export default class Itemdatabase {
                         resolve(results);        
                     });      
                 }).then((result) => {        
-                    this.closeDatabase(db);      
+                    this.Desconectar(db);      
                 }).catch((err) => {        
                     console.log(err);      
                 });    
@@ -110,4 +109,28 @@ export default class Itemdatabase {
             });  
         });  
     }
+
+//Função para excluir um dado do banco pela id
+Remover(id) {  
+    return new Promise((resolve) => {    
+        this.Conectar().then((db) => {      
+            db.transaction((tx) => {    
+                //Query SQL para deletar um item da base de dados    
+                tx.executeSql('DELETE FROM Item WHERE id = ?', [id]).then(([tx, results]) => {          
+                    console.log(results);          
+                    resolve(results);        
+                });      
+            }).then((result) => {        
+                this.Desconectar(db);      
+            }).catch((err) => {        
+                console.log(err);      
+            });    
+        }).catch((err) => {      
+            console.log(err);    
+        });  
+    });  
+}
+                      
+
+
 }

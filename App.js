@@ -4,7 +4,7 @@ import { Text, View, TouchableOpacity,ScrollView, Button,TextInput,} from 'react
 import Item from './src/components/models/Item';
 import Itemdatabase from './src/components/dataBase/Itemdatabase';
 import { Style } from './src/components/estilo/Style';
-import Turmaview from './src/lista/Turmaview';
+import Turmaview  from './src/lista/Turmaview';
 
 
 export default class App extends Component {
@@ -17,9 +17,8 @@ export default class App extends Component {
     idade:"",
     endereco:"",
     turma:"",
-    lista: [],
-    k:9,
-    o:1589,
+   lista: []
+   
     }
  }
 
@@ -40,17 +39,24 @@ export default class App extends Component {
     db.Cadastrar(NovoItem)
     this.Listar();
   }
+
+Remover = (id) => {
+const db = new Itemdatabase();
+db.Remover(id);
+this.Listar();
+}
+
 render() {
     return (
    
       <View style={Style.container}>
-       <TextInput  onChangeText={(textoDigitado) => this.setState({nome:textoDigitado})}  placeholder='Nome'/>
+       <TextInput  onChangeText={(textoDigitado) => this.setState({nome:textoDigitado})} placeholder='Nome'/>
        <TextInput  onChangeText={(textoDigitado) => this.setState({idade:textoDigitado})}placeholder='Idade' />
        <TextInput  onChangeText={(textoDigitado) => this.setState({turma:textoDigitado})}placeholder='Turma '/>
        <TextInput  onChangeText={(textoDigitado) => this.setState({endereco:textoDigitado})}placeholder='Endereco'/>
 
       
-        <TouchableOpacity onPress={()=> this.Cadastrar(this.state.id,this.state.nome,this.state.endereco,this.state.idade,this.state.turma)}>
+        <TouchableOpacity onPress={()=> this.Cadastrar(this.state.nome,this.state.idade,this.state.endereco,this.state.turma)}>
           <Text>Cadastrar</Text>
         </TouchableOpacity>
 
@@ -65,6 +71,9 @@ render() {
           idade={item.idade}
           endereco={item.endereco}
           turma={item.turma}
+        
+          
+          deletar={this.Remover}
           />
         )
         )
