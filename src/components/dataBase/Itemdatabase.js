@@ -4,7 +4,7 @@ SQLite.DEBUG(true);
 SQLite.enablePromise(true);
 
 //Variáveis de conexão/criação do banco de dados 
-const database_name = "Reactoffline.db"; //Nome do banco de dados
+const database_name = "Escola.db"; //Nome do banco de dados
 const database_version = "1.0"; //Versão do banco de dados
 const database_displayname = "SQLite React Offline Database"; //Nome de exibição do banco de dados
 const database_size = 200000; //tamanho do banco de dados
@@ -73,8 +73,8 @@ export default class Itemdatabase {
                         let len = results.rows.length;
                         for (let i = 0; i < len; i++) {
                             let row = results.rows.item(i);
-                            const { id,nome,idade,turma,endereco,aluno } = row;
-                           lista.push({ id, nome,idade,turma,endereco,aluno });
+                            const { id, nome, idade, turma, endereco, aluno } = row;
+                            lista.push({ id, nome, idade, turma, endereco, aluno });
                         }
                         console.log(lista);
                         resolve(lista);
@@ -90,68 +90,68 @@ export default class Itemdatabase {
         });
     }
 
-     // Função para acrescentar um novo produto na tabela
-     Cadastrar(item) {  
-        return new Promise((resolve) => {    
-            this.Conectar().then((db) => {      
-                db.transaction((tx) => {     
+    // Função para acrescentar um novo produto na tabela
+    Cadastrar(item) {
+        return new Promise((resolve) => {
+            this.Conectar().then((db) => {
+                db.transaction((tx) => {
                     //Query SQL para inserir um novo produto   
-                    tx.executeSql('INSERT INTO Item (nome,idade,turma,endereco,aluno) VALUES (?, ?, ?, ?,?)', [ item.nome, item.idade, item.turma, item.endereco,item.aluno]).then(([tx, results]) => { 
-                        resolve(results);        
-                    });      
-                }).then((result) => {        
-                    this.Desconectar(db);      
-                }).catch((err) => {        
-                    console.log(err);      
-                });    
-            }).catch((err) => {      
-                console.log(err);    
-            });  
-        });  
+                    tx.executeSql('INSERT INTO Item (nome,idade,turma,endereco,aluno) VALUES (?, ?, ?, ?,?)', [item.nome, item.idade, item.turma, item.endereco, item.aluno]).then(([tx, results]) => {
+                        resolve(results);
+                    });
+                }).then((result) => {
+                    this.Desconectar(db);
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }).catch((err) => {
+                console.log(err);
+            });
+        });
     }
 
-//Função para excluir um dado do banco pela id
-Remover(id) {  
-    return new Promise((resolve) => {    
-        this.Conectar().then((db) => {      
-            db.transaction((tx) => {    
-                //Query SQL para deletar um item da base de dados    
-                tx.executeSql('DELETE FROM Item WHERE id = ?', [id]).then(([tx, results]) => {          
-                    console.log(results);          
-                    resolve(results);        
-                });      
-            }).then((result) => {        
-                this.Desconectar(db);      
-            }).catch((err) => {        
-                console.log(err);      
-            });    
-        }).catch((err) => {      
-            console.log(err);    
-        });  
-    });  
+    //Função para excluir um dado do banco pela id
+    Remover(id) {
+        return new Promise((resolve) => {
+            this.Conectar().then((db) => {
+                db.transaction((tx) => {
+                    //Query SQL para deletar um item da base de dados    
+                    tx.executeSql('DELETE FROM Item WHERE id = ?', [id]).then(([tx, results]) => {
+                        console.log(results);
+                        resolve(results);
+                    });
+                }).then((result) => {
+                    this.Desconectar(db);
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }).catch((err) => {
+                console.log(err);
+            });
+        });
+    }
+
+    Atualizar(id) {
+        //Função para atualizar um dado que já foi escrito anteriormente no banco de dados a partir da sua id
+
+        return new Promise((resolve) => {
+            this.Conectar().then((db) => {
+                db.transaction((tx) => {
+                    //Query SQL para atualizar um dado no banco        
+                    tx.executeSql('UPDATE Item SET aluno = "🤩 Cadastrado" WHERE id = ?', [id]).then(([tx, results]) => {
+                        resolve(results);
+                    });
+                }).then((result) => {
+                    this.Desconectar(db);
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }).catch((err) => {
+                console.log(err);
+            });
+        });
+    }
 }
 
-Atualizar(id){
- //Função para atualizar um dado que já foi escrito anteriormente no banco de dados a partir da sua id
-
-    return new Promise((resolve) => {    
-        this.Conectar().then((db) => {      
-            db.transaction((tx) => {
-                //Query SQL para atualizar um dado no banco        
-                tx.executeSql('UPDATE Item SET aluno = "🤩 Cadastrado" WHERE id = ?', [id]).then(([tx, results]) => {          
-                resolve(results);        
-            });      
-        }).then((result) => {        
-              this.Desconectar(db);      
-            }).catch((err) => {        
-              console.log(err);      
-            });    
-        }).catch((err) => {     
-            console.log(err);    
-        });  
-    });  
-}
-}
-                      
 
 
