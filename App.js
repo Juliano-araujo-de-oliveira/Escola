@@ -13,13 +13,15 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    nome:"",
-    idade:"",
-    endereco:"",
-    turma:"",
+    nome:"Não Especificado",
+    idade:0,
+    endereco:"Não Especificado",
+    turma:0,
+    aluno:"🙄 Não Cadastrado",
    lista: []
    
     }
+ 
  }
 
   Listar = () => {
@@ -33,9 +35,9 @@ export default class App extends Component {
   }
 
   
-  Cadastrar = (nome,idade,turma,endereco) => {
+  Cadastrar = (nome,idade,turma,endereco,aluno) => {
     const db = new Itemdatabase();
-    const NovoItem = new Item(nome,idade,turma,endereco);
+    const NovoItem = new Item(nome,idade,turma,endereco,aluno);
     db.Cadastrar(NovoItem)
     this.Listar();
   }
@@ -43,6 +45,12 @@ export default class App extends Component {
 Remover = (id) => {
 const db = new Itemdatabase();
 db.Remover(id);
+this.Listar();
+};
+
+Atualizar = (id) => {
+const db = new Itemdatabase();
+db.Atualizar(id);
 this.Listar();
 }
 
@@ -54,9 +62,9 @@ render() {
        <TextInput  onChangeText={(textoDigitado) => this.setState({idade:textoDigitado})}placeholder='Idade' />
        <TextInput  onChangeText={(textoDigitado) => this.setState({turma:textoDigitado})}placeholder='Turma '/>
        <TextInput  onChangeText={(textoDigitado) => this.setState({endereco:textoDigitado})}placeholder='Endereco'/>
-
+  
       
-        <TouchableOpacity onPress={()=> this.Cadastrar(this.state.nome,this.state.idade,this.state.endereco,this.state.turma)}>
+        <TouchableOpacity onPress={()=> this.Cadastrar(this.state.nome,this.state.idade,this.state.turma,this.state.endereco,this.state.aluno)}>
           <Text>Cadastrar</Text>
         </TouchableOpacity>
 
@@ -65,15 +73,17 @@ render() {
         {
         this.state.lista.map(
         item => (
-          <Turmaview
+      <Turmaview
           id={item.id}
           nome={item.nome}
           idade={item.idade}
           endereco={item.endereco}
           turma={item.turma}
-        
-          
+           aluno={item.aluno}
+
+          atualizado={this.Atualizar}
           deletar={this.Remover}
+       
           />
         )
         )

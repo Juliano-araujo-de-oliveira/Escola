@@ -27,7 +27,7 @@ export default class Itemdatabase {
                         console.log("Erro Recebido: ", error);
                         console.log("O Banco de dados não está pronto ... Criando Dados");
                         db.transaction((tx) => {
-                            tx.executeSql('CREATE TABLE IF NOT EXISTS Item (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(30), idade INTEGER, turma INTEGER, endereco VARCHAR(30))');
+                            tx.executeSql('CREATE TABLE IF NOT EXISTS Item (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(30), idade INTEGER, turma INTEGER, endereco VARCHAR(30),aluno VARCHAR(50))');
                         }).then(() => {
                             console.log("Tabela criada com Sucesso");
                         }).catch(error => {
@@ -96,7 +96,7 @@ export default class Itemdatabase {
             this.Conectar().then((db) => {      
                 db.transaction((tx) => {     
                     //Query SQL para inserir um novo produto   
-                    tx.executeSql('INSERT INTO Item (id,nome,idade,turma,endereco ) VALUES (?, ?, ?, ?,?)', [item.id, item.nome, item.idade, item.turma, item.endereco]).then(([tx, results]) => { 
+                    tx.executeSql('INSERT INTO Item (nome,idade,turma,endereco,aluno) VALUES (?, ?, ?, ?,?)', [ item.nome, item.idade, item.turma, item.endereco,item.aluno]).then(([tx, results]) => { 
                         resolve(results);        
                     });      
                 }).then((result) => {        
@@ -130,7 +130,28 @@ Remover(id) {
         });  
     });  
 }
+
+Atualizar(id){
+ //Função para atualizar um dado que já foi escrito anteriormente no banco de dados a partir da sua id
+
+    return new Promise((resolve) => {    
+        this.Conectar().then((db) => {      
+            db.transaction((tx) => {
+                //Query SQL para atualizar um dado no banco        
+                tx.executeSql('UPDATE Item SET aluno = "🤩 Cadastrado" WHERE id = ?', [id]).then(([tx, results]) => {          
+                resolve(results);        
+            });      
+        }).then((result) => {        
+              this.Desconectar(db);      
+            }).catch((err) => {        
+              console.log(err);      
+            });    
+        }).catch((err) => {     
+            console.log(err);    
+        });  
+    });  
+}
+}
                       
 
 
-}

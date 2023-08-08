@@ -12,10 +12,9 @@ Cadas:{
     textAlign:'center'
 },
 lista:{
-    fontSize:20,
+    fontSize:30,
      margin:10,
 textTransform:'capitalize',
-marginLeft:20,
 color:'black'
 },
 
@@ -27,6 +26,11 @@ cadastroConcluido:{
    margin:10,
    color:'black'
 },
+bonecos:{
+    fontSize:25,
+    textAlign:'right',
+    margin:10
+}
 })
 
 export {Style}
