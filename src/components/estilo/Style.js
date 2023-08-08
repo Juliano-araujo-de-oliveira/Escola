@@ -8,12 +8,7 @@ const Style = StyleSheet.create({
 
     },
 
-    Cadas: {
-        fontSize: 20,
-        color: 'black',
-        textAlign: 'center'
-    },
-
+   
     listacadastro: {
         margin: 5,
         fontSize: 15,
@@ -72,7 +67,7 @@ const Style = StyleSheet.create({
 
     cadastroConcluido: {
         fontStyle: 'italic',
-        fontSize: 25,
+        fontSize: 15,
         textAlign: 'center',
         textDecorationLine: 'underline',
         margin: 5,
