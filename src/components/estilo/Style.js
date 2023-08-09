@@ -10,10 +10,16 @@ const Style = StyleSheet.create({
 
    
     listacadastro: {
-        margin: 5,
+        margin: 2,
         fontSize: 15,
         color: '#000000',
 
+    },
+
+    relogio:{
+        fontSize:30,
+        textAlign:'center',
+        color:'black'
     },
 
     BotaoRemoverLista: {
@@ -61,7 +67,8 @@ const Style = StyleSheet.create({
     BorderLista: {
         borderWidth: 10,
         borderRadius: 20,
-        margin: 15,
+        margin: 5,
+       
         backgroundColor: '#00FFFF'
     },
 

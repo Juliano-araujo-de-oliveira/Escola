@@ -20,6 +20,13 @@ export default class App extends Component {
     }
   }
 
+  VerificaCadastro = () =>{
+    let Dia = new Date().getDate() -1;
+    let mes = new Date().getMonth() +1 ;
+    let ano = new Date().getFullYear();
+    return(Dia +"/" + mes +"/"+ ano)
+  }
+
   Listar = () => {
     const db = new Itemdatabase();
     db.Listar().then(
@@ -52,6 +59,7 @@ export default class App extends Component {
     return (
       <View style={Style.container}>
         <View style={Style.Telainput}>
+          <Text style={Style.relogio}>{this.VerificaCadastro()}</Text>
           <Text style={Style.EscritaInput}>Faça seu Cadastro</Text>
           <TextInput onChangeText={(textoDigitado) => this.setState({ nome: textoDigitado })} style={Style.EscritaInput} placeholder='Nome' />
           <TextInput onChangeText={(textoDigitado) => this.setState({ idade: textoDigitado })} style={Style.EscritaInput} placeholder='Idade' />
